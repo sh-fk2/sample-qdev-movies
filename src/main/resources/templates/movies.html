@@ -8,7 +8,62 @@
 </head>
 <body>
     <div class="container">
-        <h1>Free Movies This Month</h1>
+        <h1>🏴‍☠️ Free Movie Treasure This Month 🏴‍☠️</h1>
+        
+        <!-- Pirate-themed Search Form -->
+        <div class="treasure-hunt-form">
+            <h2>⚓ Hunt for Movie Treasure ⚓</h2>
+            <form action="/movies/search" method="get" class="search-form">
+                <div class="search-fields">
+                    <div class="search-field">
+                        <label for="movieName">🎬 Movie Name:</label>
+                        <input type="text" 
+                               id="movieName" 
+                               name="name" 
+                               th:value="${searchName}"
+                               placeholder="Enter movie name, ye scurvy dog..."
+                               class="search-input">
+                    </div>
+                    
+                    <div class="search-field">
+                        <label for="movieId">🆔 Movie ID:</label>
+                        <input type="number" 
+                               id="movieId" 
+                               name="id" 
+                               th:value="${searchId}"
+                               placeholder="Enter treasure ID..."
+                               min="1"
+                               class="search-input">
+                    </div>
+                    
+                    <div class="search-field">
+                        <label for="genre">🎭 Genre:</label>
+                        <input type="text" 
+                               id="genre" 
+                               name="genre" 
+                               th:value="${searchGenre}"
+                               placeholder="Drama, Action, Adventure..."
+                               class="search-input">
+                    </div>
+                </div>
+                
+                <div class="search-buttons">
+                    <button type="submit" class="treasure-hunt-btn">🔍 Start Treasure Hunt!</button>
+                    <a href="/movies" class="show-all-btn">🗺️ Show All Treasure</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Search Results Message -->
+        <div th:if="${searchPerformed}" class="search-message">
+            <div th:if="${title and message}" 
+                 th:class="${movies.size() > 0 ? 'success-message' : 'no-results-message'}">
+                <h3 th:text="${title}">Search Results</h3>
+                <p th:text="${message}">Search message</p>
+            </div>
+        </div>
+
+        <!-- Movies Grid -->
         <div class="movies-grid">
             <div class="movie-card" th:each="movie : ${movies}">
                 <div class="movie-icon" th:text="${movie.icon}">🎬</div>
@@ -26,8 +81,14 @@
                     </span>
                     <span class="rating-score" th:text="${#numbers.formatDecimal(movie.imdbRating, 1, 1)} + '/5'">5.0/5</span>
                 </div>
-                <a th:href="@{/movies/{id}/details(id=${movie.id})}" class="details-btn">View Details</a>
+                <a th:href="@{/movies/{id}/details(id=${movie.id})}" class="details-btn">⚓ View Details</a>
             </div>
+        </div>
+
+        <!-- No Movies Message -->
+        <div th:if="${movies.empty and not searchPerformed}" class="no-movies-message">
+            <h3>🏴‍☠️ Arrr! No Movie Treasure Available</h3>
+            <p>Shiver me timbers! There be no movies in the treasure chest right now, matey!</p>
         </div>
     </div>
 </body>
