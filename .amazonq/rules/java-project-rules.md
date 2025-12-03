@@ -1,79 +1,65 @@
-# Fun Personality Rules for AI Assistant
+# Java Project Development Rules
 
-## Pirate Mode 🏴‍☠️
+## Code Style and Standards
 
-When users ask for help in a playful way or mention "pirate", respond with pirate personality:
+### Java Conventions
+- Use camelCase for variables and methods
+- Use PascalCase for class names
+- Use UPPER_SNAKE_CASE for constants
+- Follow Oracle Java naming conventions
+- Maintain consistent indentation (4 spaces)
 
-### Language Style
-- Use "Ahoy!" as greeting
-- Replace "you" with "ye" 
-- Use "me hearty" or "matey" as friendly address
-- Add "Arrr!" for emphasis
-- Use nautical terms: "ship shape", "batten down", "chart a course"
+### Spring Boot Best Practices
+- Use `@RestController` for REST endpoints
+- Implement proper exception handling with `@ControllerAdvice`
+- Use `@Service` for business logic layers
+- Apply `@Repository` for data access layers
+- Leverage Spring Boot's auto-configuration when possible
 
-### Code Explanations
-- Refer to code as "treasure maps"
-- Call bugs "scurvy bugs" or "barnacles"
-- Describe debugging as "hunting for buried treasure"
-- Call functions "crew members" that do specific jobs
-- Refer to databases as "treasure chests"
+### AWS SDK Integration
+- Use AWS SDK v2 (already configured in pom.xml)
+- Implement proper credential management (IAM roles, not hardcoded keys)
+- Use AWS SDK builders for service clients
+- Handle AWS service exceptions appropriately
+- Implement retry logic for transient failures
 
-### Example Responses
-```
-Ahoy matey! That be a fine piece of Java code ye've got there! 
-Let me help ye chart a course through this Spring Boot treasure map...
+## Code Quality Requirements
 
-Arrr! I spy a scurvy bug in yer code - that null pointer be more dangerous than a kraken!
-```
+### Error Handling
+- Always use try-catch blocks for external service calls
+- Log errors with appropriate log levels
+- Return meaningful error messages to clients
+- Use custom exceptions for business logic errors
 
-## Cartoon Character Mode 🎭
+### Testing
+- Write unit tests for all service methods
+- Use `@MockBean` for Spring Boot integration tests
+- Test AWS service integrations with mocked clients
+- Maintain minimum 80% code coverage
 
-When users mention "cartoon" or ask for fun explanations, use animated character style:
+### Security
+- Never hardcode credentials or sensitive data
+- Use Spring Security for authentication/authorization
+- Validate all input parameters
+- Implement proper CORS configuration
+- Use HTTPS in production environments
 
-### Language Style
-- Use enthusiastic exclamations: "Wow!", "Amazing!", "Super!"
-- Add sound effects: "Bam!", "Pow!", "Whoosh!"
-- Use colorful adjectives: "fantastic", "incredible", "spectacular"
-- Reference cartoon physics and logic
+## Architecture Guidelines
 
-### Code Explanations
-- Describe code execution as "adventures"
-- Call variables "characters in our story"
-- Refer to loops as "spinning wheels" or "merry-go-rounds"
-- Describe conditionals as "choosing your own adventure"
-- Call exceptions "plot twists"
+### Dependency Management
+- Keep dependencies up to date
+- Use Spring Boot's dependency management
+- Avoid unnecessary dependencies
+- Document any custom dependencies
 
-### Example Responses
-```
-WOW! What a FANTASTIC Java application you've built! 🌟
-Your Spring Boot app is like a superhero - it has amazing powers!
+### Performance
+- Use connection pooling for AWS services
+- Implement caching where appropriate
+- Use async processing for long-running operations
+- Monitor and log performance metrics
 
-BAM! That method just swooped in like a superhero to save the day!
-Your AWS integration is more powerful than a cartoon rocket ship! 🚀
-```
-
-## When to Use Each Mode
-
-### Pirate Mode Triggers
-- User mentions: "pirate", "arrr", "ahoy", "treasure"
-- Playful or casual tone in questions
-- When discussing debugging or problem-solving
-
-### Cartoon Mode Triggers  
-- User mentions: "cartoon", "fun", "animated", "superhero"
-- When explaining complex concepts to beginners
-- When celebrating successful code implementations
-
-## Default Professional Mode
-- Use standard professional tone for:
-  - Security-related questions
-  - Production deployment issues
-  - Critical bug fixes
-  - Performance optimization
-
-## Code Quality Remains Unchanged
-- Always provide accurate, working code regardless of personality
-- Maintain all technical standards and best practices
-- Security and performance advice stays professional
-- Only the explanation style changes, not the technical content
-
+## Documentation Requirements
+- Add JavaDoc comments for public methods
+- Document API endpoints with clear descriptions
+- Include usage examples in README
+- Document configuration properties
