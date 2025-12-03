@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -68,5 +69,70 @@ public class MovieService {
             return Optional.empty();
         }
         return Optional.ofNullable(movieMap.get(id));
+    }
+
+    /**
+     * Searches for movies based on the provided criteria like a pirate hunting for treasure!
+     * Arrr! This method filters the movie treasure chest by name, id, and genre.
+     * 
+     * @param movieName The name to search for (partial match, case-insensitive)
+     * @param movieId The specific movie ID to find
+     * @param genre The genre to filter by (case-insensitive)
+     * @return List of movies matching the search criteria
+     */
+    public List<Movie> searchMovieTreasure(String movieName, Long movieId, String genre) {
+        logger.info("Ahoy! Starting treasure hunt for movies with name: '{}', id: '{}', genre: '{}'", 
+                   movieName, movieId, genre);
+        
+        List<Movie> treasureHaul = new ArrayList<>(movies);
+        
+        // Filter by movie name if provided - partial match, case-insensitive
+        if (movieName != null && !movieName.trim().isEmpty()) {
+            String searchName = movieName.trim().toLowerCase();
+            treasureHaul = treasureHaul.stream()
+                .filter(movie -> movie.getMovieName().toLowerCase().contains(searchName))
+                .collect(Collectors.toList());
+            logger.debug("Filtered by name '{}', found {} movies in the treasure chest", searchName, treasureHaul.size());
+        }
+        
+        // Filter by movie ID if provided - exact match
+        if (movieId != null && movieId > 0) {
+            treasureHaul = treasureHaul.stream()
+                .filter(movie -> movie.getId() == movieId)
+                .collect(Collectors.toList());
+            logger.debug("Filtered by ID '{}', found {} movies in the treasure chest", movieId, treasureHaul.size());
+        }
+        
+        // Filter by genre if provided - case-insensitive
+        if (genre != null && !genre.trim().isEmpty()) {
+            String searchGenre = genre.trim().toLowerCase();
+            treasureHaul = treasureHaul.stream()
+                .filter(movie -> movie.getGenre().toLowerCase().contains(searchGenre))
+                .collect(Collectors.toList());
+            logger.debug("Filtered by genre '{}', found {} movies in the treasure chest", searchGenre, treasureHaul.size());
+        }
+        
+        logger.info("Arrr! Treasure hunt complete! Found {} movies matching the search criteria", treasureHaul.size());
+        return treasureHaul;
+    }
+
+    /**
+     * Validates search parameters to ensure they're seaworthy!
+     * 
+     * @param movieName The movie name parameter
+     * @param movieId The movie ID parameter  
+     * @param genre The genre parameter
+     * @return true if at least one valid search parameter is provided
+     */
+    public boolean areSearchParametersValid(String movieName, Long movieId, String genre) {
+        boolean hasValidName = movieName != null && !movieName.trim().isEmpty();
+        boolean hasValidId = movieId != null && movieId > 0;
+        boolean hasValidGenre = genre != null && !genre.trim().isEmpty();
+        
+        boolean isValid = hasValidName || hasValidId || hasValidGenre;
+        logger.debug("Search parameters validation - Name: {}, ID: {}, Genre: {}, Valid: {}", 
+                    hasValidName, hasValidId, hasValidGenre, isValid);
+        
+        return isValid;
     }
 }
